@@ -1,0 +1,25 @@
+{
+    "products": [
+  {
+    "id": 1,
+    "name": "Super Chair",
+    "price": 310,
+    "description": "A nice chair",
+    "image": "https://www.ikea.com/pt/pt/images/products/adde-cadeira-preto__0437197_pe590736_s5.jpg?f=s"
+  },
+  {
+    "id": 2,
+    "name": "Super Sofa",
+    "price": 340,
+    "description": "A comfy sofa",
+    "image": "https://www.ikea.com/pt/pt/images/products/eskilstuna-sofa-3-lugares-c-chaise-longue-hillared-antracite__0794771_pe765710_s5.jpg?f=s"
+  },
+  {
+    "id": 3,
+    "name": "Nice Table",
+    "price": 910,
+    "description": "A nice table",
+    "image": "https://www.ikea.com/pt/pt/images/products/ekedalen-mesa-extensivel-castanho-escuro__0736968_pe740832_s5.jpg?f=s"
+  }
+]
+}
