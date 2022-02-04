@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Form from './Form';
 import Menu from './Menu';
 
 const url = 'https://jsb-ecommerce-app.herokuapp.com/api/v1/products/list';
@@ -8,6 +9,7 @@ function App() {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async (url) => {
+    setLoading(true);
     try {
       const res = await fetch(url);
       const products = await res.json();
@@ -30,6 +32,7 @@ function App() {
 
   return (
     <main>
+      <Form fetchProducts={fetchProducts} url={url} />
       <section className='menu section'>
         <div className='title'>
           <h2>Our Products</h2>
