@@ -1,7 +1,12 @@
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import api from './api';
 
-const Form = ({ fetchProducts, url }) => {
+const Form = () => {
+  const { id } = useParams();
+  console.log(useParams());
+  console.log(id);
+
   const [product, setProduct] = useState({
     name: '',
     price: 0,
@@ -9,28 +14,63 @@ const Form = ({ fetchProducts, url }) => {
     image: '',
   });
 
+  const fetchProduct = (id) => {
+    api
+      .get(`/products/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        const targetProduct = res.data;
+        setProduct(targetProduct);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    if (id) {
+      const targetProduct = fetchProduct(id);
+    }
+  }, []);
+
   const handleChange = (e) => {
     const field = e.target.name;
     const value = e.target.value;
     setProduct({ ...product, [field]: value });
   };
 
-  // REFATORAR!!
   const postData = (e) => {
     e.preventDefault();
     if (product.name && product.price && product.description && product.image) {
-      axios
-        .post('https://jsb-ecommerce-app.herokuapp.com/api/v1/products', {
+      api
+        .post('/products', {
           ...product,
         })
-        .then(fetchProducts(url))
+        .then(() =>
+          setProduct({
+            name: '',
+            price: 0,
+            description: '',
+            image: '',
+          })
+        )
+        .catch((error) => console.log(error));
+    }
+  };
+
+  const putData = (e) => {
+    e.preventDefault();
+    if (product.name && product.price && product.description && product.image) {
+      api
+        .put(`/products/${id}`, {
+          ...product,
+        })
+        .then(() => console.log('edited!'))
         .catch((error) => console.log(error));
     }
   };
 
   return (
     <>
-      <form className='form' onSubmit={postData}>
+      <form className='form' onSubmit={id ? putData : postData}>
         <div className='form-control'>
           <label htmlFor='name'>Name: </label>
           <input
@@ -75,7 +115,7 @@ const Form = ({ fetchProducts, url }) => {
           />
         </div>
 
-        <button type='submit'>add a product</button>
+        <button type='submit'>{id ? 'edit product' : 'create product'}</button>
       </form>
     </>
   );
